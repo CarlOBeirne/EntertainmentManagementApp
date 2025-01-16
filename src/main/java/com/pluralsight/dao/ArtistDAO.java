@@ -4,8 +4,10 @@ import com.pluralsight.domain.Artist;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class ArtistDAO implements DaoInterface<Artist> {
     private final HashMap<Integer, Artist> artists = new HashMap<>();
