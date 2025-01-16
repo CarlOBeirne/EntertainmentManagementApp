@@ -16,23 +16,23 @@ public class TrackDAO implements DaoInterface<Track> {
         /*
             if null then IllegalArgumentException,
             if track's id is 0, it's a new track, and we add it to the tracks map
-            if we try to update an unexisting track throw error
-            if track id isn't null we update it after checking if the track's ID exists.
+            if track exists and isn't null we update it after checking if the track's ID exists.
+            if we try to update a nonexistent track print error msg
          */
 
-        if (track == null) {
-            throw new IllegalArgumentException("Track cannot be null");
-        }
+        if (track == null) throw new IllegalArgumentException("Track cannot be null");
         if (track.getId() == 0) {
             int id = nextId.getAndIncrement();
             track.setId(id);
-            tracks.put(id, track);
-        } else {
-            if (!tracks.containsKey(track.getId())) {
-                throw new IllegalArgumentException(("Track ID" + track.getId()) + " does not exist");
-            }
-            tracks.put(track.getId(), track);
+            System.out.println("Track ID" + track.getId() + "created.");
         }
+        if (tracks.containsKey(track.getId())) {
+                System.out.println("Track ID" + track.getId() + "updated.");
+        }
+        else {
+            System.out.println("Track ID" + track.getId() + "doesn't exist.");
+        }
+        tracks.put(track.getId(), track);
         return track;
     }
 
