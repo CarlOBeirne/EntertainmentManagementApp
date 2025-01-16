@@ -1,6 +1,7 @@
 package com.pluralsight.dao;
 
 import com.pluralsight.domain.Track;
+import com.pluralsight.enums.Genre;
 
 import java.util.*;
 import java.util.ArrayList;
