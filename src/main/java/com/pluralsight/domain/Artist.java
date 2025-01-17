@@ -2,6 +2,7 @@ package com.pluralsight.domain;
 
 import com.pluralsight.enums.ArtistType;
 import com.pluralsight.enums.Genre;
+import com.pluralsight.utils.TrackHelper;
 
 import java.util.List;
 
@@ -86,5 +87,19 @@ public class Artist {
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+//                ", artistTypes=" + artistTypes +
+//                ", genres=" + genres +
+                ", biography='" + biography + '\'' +
+                ", nationality='" + nacionality + '\'' +
+                ", yearFounded='" + yearFounded + '\'' +
+                ", tracks=" + TrackHelper.getTrackTitleFromList(tracks) +
+                '}';
     }
 }

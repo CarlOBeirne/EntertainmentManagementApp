@@ -25,7 +25,7 @@ public class ArtistController {
             System.out.println("Artist created successfully");
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -39,7 +39,7 @@ public class ArtistController {
             System.out.println("Artist updated successfully");
             return "Http 200 OK";
         }  catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -64,7 +64,7 @@ public class ArtistController {
             System.out.println(allArtists.getFirst());
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -85,7 +85,7 @@ public class ArtistController {
             artistsByGenreList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -101,7 +101,7 @@ public class ArtistController {
             artistsByNameList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -117,7 +117,7 @@ public class ArtistController {
             artistsByNationalityList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -133,7 +133,7 @@ public class ArtistController {
             artistsByYearFoundedList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -149,7 +149,7 @@ public class ArtistController {
             artistsByTrackList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -165,7 +165,7 @@ public class ArtistController {
             artistsByArtistTypeList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 
@@ -178,7 +178,7 @@ public class ArtistController {
                 return "Http 404 Not Found";
             }
         } catch (Exception e) {
-            return "Http 500 Internal Server Error";
+            return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
 }

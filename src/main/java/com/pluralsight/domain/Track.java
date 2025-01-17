@@ -1,6 +1,7 @@
 package com.pluralsight.domain;
 
 import com.pluralsight.enums.Genre;
+import com.pluralsight.utils.ArtistHelper;
 
 import java.util.List;
 
@@ -9,12 +10,11 @@ public class Track {
     private String title;
     private int durationSeconds;
     private Genre genre;
-    // TODO: Replace ? with Artist when Artist class is created
-    private List<?> artists;
+    private List<Artist> artists;
     private int yearReleased;
     private int beatsPerMinute;
 
-    public Track(String title, int durationSeconds, Genre genre, List<?> artists, int yearReleased, int beatsPerMinute) {
+    public Track(String title, int durationSeconds, Genre genre, List<Artist> artists, int yearReleased, int beatsPerMinute) {
         this.title = title;
         this.durationSeconds = durationSeconds;
         this.genre = genre;
@@ -55,12 +55,11 @@ public class Track {
         this.genre = genre;
     }
 
-    public List<?> getArtists() {
+    public List<Artist> getArtists() {
         return artists;
     }
 
-    // TODO: Replace ? with Artist when Artist class is created
-    public void setArtists(List<?> artists) {
+    public void setArtists(List<Artist> artists) {
         this.artists = artists;
     }
 
@@ -78,5 +77,18 @@ public class Track {
 
     public void setBeatsPerMinute(int beatsPerMinute) {
         this.beatsPerMinute = beatsPerMinute;
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", durationSeconds=" + durationSeconds +
+                ", genre=" + genre +
+                ", artists=" + ArtistHelper.getArtistNameFromList(artists) +
+                ", yearReleased=" + yearReleased +
+                ", beatsPerMinute=" + beatsPerMinute +
+                '}';
     }
 }
