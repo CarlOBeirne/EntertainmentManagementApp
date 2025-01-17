@@ -5,8 +5,10 @@ import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.Genre;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TrackDataService {
     private final TrackDAO trackDAO = new TrackDAO();
@@ -28,19 +30,21 @@ public class TrackDataService {
         trackDAO.delete(id);
     }
 
-    public List<Track> getByName(String title) {
-        return getAllTracks().stream().filter(e -> e.getTitle().equals(title)).toList();
+    public List<Track> getByTrackName(String title) {
+        return getAllTracks().stream()
+                .filter(e -> e.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
-    public List<Track> getByGenre(Genre genre) {
-        return getAllTracks().stream().filter(e -> e.getGenre().equals(genre)).toList();
+    public List<Track> getByTrackGenre(Genre genre) {
+        return getAllTracks().stream().filter(e -> e.getGenre().name().equalsIgnoreCase(genre.name())).toList();
     }
 
-    public List<Track> getByYearReleased(int yearReleased) {
+    public List<Track> getByTrackYearReleased(int yearReleased) {
         return getAllTracks().stream().filter(e -> e.getYearReleased() == yearReleased).toList();
     }
 
-    public List<Track> getByArtist(Artist artist) {
+    public List<Track> getByTrackArtist(Artist artist) {
         return getAllTracks().stream().filter(e -> e.getArtists().contains(artist)).toList();
     }
 }

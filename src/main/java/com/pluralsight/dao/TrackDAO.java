@@ -27,7 +27,7 @@ public class TrackDAO implements DaoInterface<Track> {
             track.setId(id);
             System.out.println("Track ID" + track.getId() + "created.");
         }
-        if (tracks.containsKey(track.getId())) {
+        else if (tracks.containsKey(track.getId())) {
                 System.out.println("Track ID" + track.getId() + "updated.");
         }
         else {
