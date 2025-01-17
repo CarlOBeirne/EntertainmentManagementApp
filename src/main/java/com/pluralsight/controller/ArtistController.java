@@ -43,7 +43,7 @@ public class ArtistController {
         }
     }
 
-//    @DeleteMapping(path = "/id/{artistId}/delete")
+    //    @DeleteMapping(path = "/id/{artistId}/delete")
     public String deleteRequestDeleteArtist(/*@PathVariable*/ int artistId) {
         if (artistId <= 0) return "Http 404 Not Found";
         return processGetArtistByIdRequest(artistId, () -> {
@@ -52,7 +52,7 @@ public class ArtistController {
         });
     }
 
-//    @GetMapping(path = "/find/artists/all")
+    //    @GetMapping(path = "/find/artists/all")
     public String getRequestGetAllArtists() {
         try {
             List<Artist> allArtists = artistDataService.getAllArtists();
@@ -68,7 +68,7 @@ public class ArtistController {
         }
     }
 
-//    @GetMapping(path = "/find/id/{artistId}")
+    //    @GetMapping(path = "/find/id/{artistId}")
     public String getRequestGetArtistById(int artistId) {
         return processGetArtistByIdRequest(artistId, () -> "Http 200 OK");
     }
@@ -77,7 +77,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByGenre(/*@PathVariable*/ Genre genre) {
         if (genre == null) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByGenreList = artistDataService.getByGenre(genre);
+            List<Artist> artistsByGenreList = artistDataService.getByArtistGenre(genre);
             if (artistsByGenreList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -89,7 +89,7 @@ public class ArtistController {
         }
     }
 
-//    @GetMapping(path = "/find/all/name/{name}
+    //    @GetMapping(path = "/find/all/name/{name}
     public String getRequestGetAllArtistsByName(/*@PathVariable*/ String name) {
         if (name == null || name.isBlank()) return "Http 404 Not Found";
         try {
@@ -105,11 +105,11 @@ public class ArtistController {
         }
     }
 
-//    @GetMapping(path = "/find/all/nationality/{nationality}
+    //    @GetMapping(path = "/find/all/nationality/{nationality}
     public String getRequestGetAllArtistsByNationality(/*@PathVariable*/ String nationality) {
         if (nationality == null || nationality.isBlank()) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByNationalityList = artistDataService.getByNationality(nationality);
+            List<Artist> artistsByNationalityList = artistDataService.getByArtistNationality(nationality);
             if (artistsByNationalityList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -121,11 +121,11 @@ public class ArtistController {
         }
     }
 
-//    @GetMapping(path = "/find/all/year/{yearFounded}
+    //    @GetMapping(path = "/find/all/year/{yearFounded}
     public String getRequestGetAllArtistsByYearFounded(/*@PathVariable*/ int yearFounded) {
-//        if (yearFounded < 0) return "Http 404 Not Found";
+        if (yearFounded < 0) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByYearFoundedList = artistDataService.getByYearFounded(yearFounded);
+            List<Artist> artistsByYearFoundedList = artistDataService.getByArtistYearFounded(yearFounded);
             if (artistsByYearFoundedList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -137,11 +137,11 @@ public class ArtistController {
         }
     }
 
-//    @GetMapping(path = "/find/all/track/{track}
+    //    @GetMapping(path = "/find/all/track/{track}
     public String getRequestGetAllArtistsByArtistTrack(/*@PathVariable*/ Track track) {
         if (track == null) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByTrackList = artistDataService.getByTrack(track);
+            List<Artist> artistsByTrackList = artistDataService.getByArtistTrack(track);
             if (artistsByTrackList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -153,7 +153,7 @@ public class ArtistController {
         }
     }
 
-//    @GetMapping(path = "/find/all/type/{artistType}
+    //    @GetMapping(path = "/find/all/type/{artistType}
     public String getRequestGetAllArtistsByArtistTrack(/*@PathVariable*/ ArtistType artistType) {
         if (artistType == null) return "Http 404 Not Found";
         try {
