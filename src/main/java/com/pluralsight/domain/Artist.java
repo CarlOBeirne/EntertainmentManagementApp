@@ -15,12 +15,10 @@ public class Artist {
     private String yearFounded;
     private List<Track> tracks;
 
-    public Artist(List<Track> tracks, String yearFounded, String nacionality, String biography, List<Genre> genres, List<ArtistType> artistTypes, String name, int id) {
-        this.tracks = tracks;
+    public Artist(String yearFounded, String nacionality, String biography, List<ArtistType> artistTypes, String name, int id) {
         this.yearFounded = yearFounded;
         this.nacionality = nacionality;
         this.biography = biography;
-        this.genres = genres;
         this.artistTypes = artistTypes;
         this.name = name;
         this.id = id;
