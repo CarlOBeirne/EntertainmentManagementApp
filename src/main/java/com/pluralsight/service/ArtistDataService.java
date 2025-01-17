@@ -23,9 +23,6 @@ public class ArtistDataService {
         if (artist == null) {
             System.err.println("NullPointerException on SaveArtist.");
         }
-        if (artist.getId() != 0) {
-            System.err.println("Artist ID should be 0 for new artists");
-        }
         return artistDAO.save(artist);
     }
 
