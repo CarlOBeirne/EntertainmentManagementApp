@@ -37,28 +37,29 @@ public class ArtistDataService {
     public void deleteArtistById(int id) {
         artistDAO.delete(id);
     }
+
     public List<Artist> getByName(String name) {
         return artistDAO.getAll().stream()
-                .filter(artist -> artist.getName().equalsIgnoreCase(name))
+                .filter(artist -> artist.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    public List<Artist> getByGenre(Genre genre) {
+    public List<Artist> getByArtistGenre(Genre genre) {
         return artistDAO.getAll().stream()
                 .filter(artist -> artist.getGenres().contains(genre))
                 .collect(Collectors.toList());
     }
 
     //TODO to be fixed - remove comment once Artist Domain is changed.
-    public List<Artist> getByNationality(String nationality) {
+    public List<Artist> getByArtistNationality(String nationality) {
         return artistDAO.getAll().stream()
-                .filter(artist -> artist.getNationality().equalsIgnoreCase(nationality))
+                .filter(artist -> artist.getNationality().toLowerCase().contains(nationality.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     //TODO yearFounded as type int
     // but Artist Domain -> yearFounded = String
-    public List<Artist> getByYearFounded(String yearFounded) {
+    public List<Artist> getByArtistYearFounded(String yearFounded) {
         return artistDAO.getAll().stream()
                 .filter(artist -> artist.getYearFounded().equals(yearFounded))
                 .collect(Collectors.toList());
@@ -70,15 +71,15 @@ public class ArtistDataService {
                 .collect(Collectors.toList());
     }
 
-    public List<Artist> getByTrack(Track track) {
+    public List<Artist> getByArtistTrack(Track track) {
         return artistDAO.getAll().stream()
                 .filter(artist -> artist.getTracks().contains(track))
                 .collect(Collectors.toList());
     }
 
-    public List<Artist> getByBiography(String biography) {
+    public List<Artist> getByArtistBiography(String biography) {
         return artistDAO.getAll().stream()
-                .filter(artist -> artist.getBiography().contains(biography))
+                .filter(artist -> artist.getBiography().toLowerCase().contains(biography.toLowerCase()))
                 .collect(Collectors.toList());
     }
 }
