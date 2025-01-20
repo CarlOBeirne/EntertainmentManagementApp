@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class TrackController {
 
-    private TrackDataService trackDataService = new TrackDataService();
+    private final TrackDataService trackDataService = new TrackDataService();
 
     public Track saveTrack(Track track) {
         return trackDataService.saveTrack(track);
@@ -28,18 +28,18 @@ public class TrackController {
     }
 
     public List<Track> getTrackByName (String name) {
-        return trackDataService.getByName(name);
+        return trackDataService.getByTrackName(name);
     }
 
     public List<Track> getTrackByGenre(Genre genre) {
-        return trackDataService.getByGenre(genre);
+        return trackDataService.getByTrackGenre(genre);
     }
 
     public List<Track> getTrackByYearReleased(int yearReleased) {
-        return trackDataService.getByYearReleased(yearReleased);
+        return trackDataService.getByTrackYearReleased(yearReleased);
     }
 
     public List<Track> getTrackByArtist (Artist artist){
-        return trackDataService.getByArtist(artist);
+        return trackDataService.getByTrackArtist(artist);
     }
 }
