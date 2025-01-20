@@ -13,10 +13,10 @@ public class Artist {
     private List<Genre> genres;
     private String biography;
     private String nationality;
-    private String yearFounded;
+    private int yearFounded;
     private List<Track> tracks;
 
-    public Artist(String yearFounded, String nationality, String biography, ArtistType artistType, String name) {
+    public Artist(int yearFounded, String nationality, String biography, ArtistType artistType, String name) {
         this.yearFounded = yearFounded;
         this.nationality = nationality;
         this.biography = biography;
@@ -72,11 +72,11 @@ public class Artist {
         this.nationality = nationality;
     }
 
-    public String getYearFounded() {
+    public int getYearFounded() {
         return yearFounded;
     }
 
-    public void setYearFounded(String yearFounded) {
+    public void setYearFounded(int yearFounded) {
         this.yearFounded = yearFounded;
     }
 
