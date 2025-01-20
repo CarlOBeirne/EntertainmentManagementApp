@@ -28,7 +28,7 @@ public class ArtistDAO implements DaoInterface<Artist> {
         }
         else {
             System.err.println("Artist ID " + artist.getId() + " does not exist.");
-            return Optional.of(artist);
+            return Optional.empty();
         }
     }
 
