@@ -12,21 +12,24 @@ public class ArtistDAO implements DaoInterface<Artist> {
     private static final AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
-    public Artist save(Artist artist) {
+    public Optional<Artist> save(Artist artist) {
         if(artist == null) throw new IllegalArgumentException("Artist cannot be null.");
         if (artist.getId() == 0) {
             int id = nextId.getAndIncrement();
             artist.setId(id);
             System.out.println("Artist ID " + artist.getId() + " created.");
+            artists.put(artist.getId(), artist);
+            return Optional.of(artist);
         }
         else if(artists.containsKey(artist.getId())) {
             System.out.println("Artist ID " + artist.getId() + " updated.");
+            artists.put(artist.getId(), artist);
+            return Optional.of(artist);
         }
         else {
             System.err.println("Artist ID " + artist.getId() + " does not exist.");
+            return Optional.of(artist);
         }
-        artists.put(artist.getId(), artist);
-        return artist;
     }
 
     @Override

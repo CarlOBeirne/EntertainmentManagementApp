@@ -1,6 +1,7 @@
 package com.pluralsight.service;
 
 import com.pluralsight.dao.ArtistDAO;
+import com.pluralsight.dao.DaoInterface;
 import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.ArtistType;
@@ -11,15 +12,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ArtistDataService {
-    private final ArtistDAO artistDAO;
+    private final DaoInterface<Artist> artistDAO;
 
     //instantiate DAO
-    public ArtistDataService() {
-        artistDAO = new ArtistDAO();
+    public ArtistDataService(DaoInterface<Artist> artistDAO) {
+        this.artistDAO = artistDAO;
     }
 
     //Save or Update artist if not null and if id isn't 0.
-    public Artist saveArtist(Artist artist) {
+    public Optional<Artist> saveArtist(Artist artist) {
         if (artist == null) {
             System.err.println("NullPointerException on SaveArtist.");
         }

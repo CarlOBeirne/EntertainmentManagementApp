@@ -73,7 +73,7 @@ public class ArtistDataServiceTest {
                 20
         );
 
-        //when (daoInterfaceMock.getById(20)).thenReturn(Optional.of(testArtist));
+        when (daoInterfaceMock.getById(20)).thenReturn(Optional.of(testArtist));
 
         // When
         artistDataService.getArtistById(20);
