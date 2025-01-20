@@ -13,7 +13,7 @@ public class TrackDAO implements DaoInterface<Track> {
     private static final AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
-    public Track save(Track track) {
+    public Optional<Track> save(Track track) {
         /*
             if null then IllegalArgumentException,
             if track's id is 0, it's a new track, and we add it to the tracks map
@@ -26,15 +26,18 @@ public class TrackDAO implements DaoInterface<Track> {
             int id = nextId.getAndIncrement();
             track.setId(id);
             System.out.println("Track ID" + track.getId() + "created.");
+            tracks.put(track.getId(), track);
+            return Optional.of(track);
         }
         else if (tracks.containsKey(track.getId())) {
                 System.out.println("Track ID" + track.getId() + "updated.");
+                tracks.put(track.getId(), track);
+                return Optional.of(track);
         }
         else {
             System.out.println("Track ID" + track.getId() + "doesn't exist.");
+            return Optional.empty();
         }
-        tracks.put(track.getId(), track);
-        return track;
     }
 
     @Override
