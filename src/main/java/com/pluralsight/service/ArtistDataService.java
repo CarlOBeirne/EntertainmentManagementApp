@@ -51,24 +51,21 @@ public class ArtistDataService {
                 .collect(Collectors.toList());
     }
 
-    //TODO to be fixed - remove comment once Artist Domain is changed.
     public List<Artist> getByArtistNationality(String nationality) {
         return artistDAO.getAll().stream()
                 .filter(artist -> artist.getNationality().toLowerCase().contains(nationality.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    //TODO yearFounded as type int
-    // but Artist Domain -> yearFounded = String
-    public List<Artist> getByArtistYearFounded(String yearFounded) {
+    public List<Artist> getByArtistYearFounded(int yearFounded) {
         return artistDAO.getAll().stream()
-                .filter(artist -> artist.getYearFounded().equals(yearFounded))
+                .filter(artist -> artist.getYearFounded() == yearFounded)
                 .collect(Collectors.toList());
     }
 
     public List<Artist> getByArtistType(ArtistType artistType) {
         return artistDAO.getAll().stream()
-                .filter(artist -> artist.getArtistTypes().contains(artistType))
+                .filter(artist -> artist.getArtistType() == artistType)
                 .collect(Collectors.toList());
     }
 
