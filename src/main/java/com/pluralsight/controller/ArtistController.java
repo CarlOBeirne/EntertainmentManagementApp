@@ -29,7 +29,6 @@ public class ArtistController {
             System.out.println("Artist created successfully");
             return "Http 200 OK";
         } catch (Exception e) {
-            System.out.println(e.getStackTrace().toString());
             return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
@@ -71,7 +70,7 @@ public class ArtistController {
                 return "Http 404 Not Found";
             }
             // Demo that there is actually artists in the list
-            System.out.println(allArtists.getFirst());
+            System.out.println(allArtists);
             return "Http 200 OK";
         } catch (Exception e) {
             return "Http 500 Internal Server Error. " + e.getMessage();

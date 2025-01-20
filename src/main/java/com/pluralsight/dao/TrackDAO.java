@@ -9,6 +9,10 @@ public class TrackDAO implements DaoInterface<Track> {
     private static final Map<Integer, Track> tracks = new HashMap<>();
     private static final AtomicInteger nextId = new AtomicInteger(1);
 
+    public void deleteAll() {
+        tracks.clear();
+    }
+
     @Override
     public Optional<Track> save(Track track) {
         /*

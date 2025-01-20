@@ -9,7 +9,6 @@ import com.pluralsight.enums.Genre;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ArtistTrackService {
     private static ArtistDataService artistDataService;
@@ -26,16 +25,52 @@ public class ArtistTrackService {
 
     public Optional<Track> saveTrack(Track track) {
         if (track == null) throw new IllegalArgumentException("Track is null.");
-        Track persistedTrack = trackDataService.saveTrack(track).orElseThrow();
-        linkTrackToArtists(persistedTrack, persistedTrack.getArtists().stream()
-                .map(Artist::getId)
-                .collect(Collectors.toList()));
+        if (track.getId() == 0) {
+            trackDataService.saveTrack(track).orElseThrow();
 
-        unlinkTrackFromArtists(track, track.getArtists().stream()
-                .map(Artist::getId)
-                .collect(Collectors.toList()));
+            linkTrackToArtists(track, track.getArtists().stream()
+                    .map(Artist::getId)
+                    .toList());
 
-        return Optional.of(persistedTrack);
+            unlinkTrackFromArtists(track, track.getArtists().stream()
+                    .map(Artist::getId)
+                    .toList());
+
+            linkGenreFromTrackToArtists(track, track.getArtists().stream()
+                    .map(Artist::getId)
+                    .toList());
+        } else {
+            trackDataService.saveTrack(track).orElseThrow();
+        }
+        return Optional.of(track);
+    }
+
+    public Optional<Track> getTrackById(int trackId) {
+        return trackDataService.getByTrackId(trackId);
+    }
+
+    public List<Track> getAllTracks() {
+        return trackDataService.getAllTracks();
+    }
+
+    public void deleteTrack(int trackId) {
+        trackDataService.deleteTrack(trackId);
+    }
+
+    public List<Track> getByTrackName(String title) {
+        return trackDataService.getByTrackName(title);
+    }
+
+    public List<Track> getByTrackGenre(Genre genre) {
+        return trackDataService.getByTrackGenre(genre);
+    }
+
+    public List<Track> getByTrackYearReleased(int yearReleased) {
+        return trackDataService.getByTrackYearReleased(yearReleased);
+    }
+
+    public List<Track> getByTrackArtist(Artist artist) {
+        return trackDataService.getByTrackArtist(artist);
     }
 
     public Optional<Artist> saveArtist(Artist artist) {
@@ -87,11 +122,7 @@ public class ArtistTrackService {
     }
 
     private void linkTrackToArtist(Track track, Integer artistId) {
-        if (artistId == null) {
-            throw new NullPointerException("Artist id is null.");
-        } else if (track == null) {
-            throw new NullPointerException("Track is null.");
-        }
+        checkArtistIdAndTrackHaveData(track, artistId);
 
         Optional<Artist> optionalArtist = artistDataService.getArtistById(artistId);
         if (optionalArtist.isEmpty()) {
@@ -107,10 +138,10 @@ public class ArtistTrackService {
         } else if (track == null) {
             throw new IllegalArgumentException("Invalid track");
         }
-        artistIdList.forEach(artist -> linkTrackToArtist(track, artist));
+        artistIdList.forEach(artistId -> linkTrackToArtist(track, artistId));
     }
 
-    public void unlinkTrackFromArtists(Track track, List<Integer> artistIdList) {
+    private void unlinkTrackFromArtists(Track track, List<Integer> artistIdList) {
         if (artistIdList == null || artistIdList.isEmpty()) {
             throw new IllegalArgumentException("Invalid artistIdList");
         } else if (track == null) {
@@ -122,8 +153,35 @@ public class ArtistTrackService {
                 .filter(artist -> !artistIdList.contains(artist.getId()))
                 .toList();
         artistsToRemoveTrackFrom.forEach(artist -> artist.removeTrack(track));
-
     }
 
+    private void linkGenreFromTrackToArtist(Track track, Integer artistId) {
+        checkArtistIdAndTrackHaveData(track, artistId);
+        Optional<Artist> optionalArtist = artistDataService.getArtistById(artistId);
+        if (optionalArtist.isEmpty()) {
+            throw new IllegalArgumentException("Artist id not found.");
+        }
+        Artist artist = optionalArtist.get();
+        if (!artist.getGenres().contains(track.getGenre())) {
+            artist.addGenre(track.getGenre());
+        }
+    }
+
+    private void linkGenreFromTrackToArtists(Track track, List<Integer> artistIdList) {
+        if (artistIdList == null || artistIdList.isEmpty()) {
+            throw new IllegalArgumentException("Invalid artistIdList");
+        } else if (track == null) {
+            throw new IllegalArgumentException("Invalid track");
+        }
+        artistIdList.forEach(artistId -> linkGenreFromTrackToArtist(track, artistId));
+    }
+
+    private static void checkArtistIdAndTrackHaveData(Track track, Integer artistId) {
+        if (artistId == null) {
+            throw new NullPointerException("Artist id is null.");
+        } else if (track == null) {
+            throw new NullPointerException("Track is null.");
+        }
+    }
 
 }

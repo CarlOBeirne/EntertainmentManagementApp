@@ -99,13 +99,21 @@ public class Artist {
         tracks.remove(track);
     }
 
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+    }
+
+    public void removeGenre(Genre genre) {
+        this.genres.remove(genre);
+    }
+
     @Override
     public String toString() {
         return "Artist{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", artistTypes=" + artistTypes +
-//                ", genres=" + genres +
+                ", artistType=" + artistType +
+                ", genres=" + genres.toString() +
                 ", biography='" + biography + '\'' +
                 ", nationality='" + nationality + '\'' +
                 ", yearFounded='" + yearFounded + '\'' +
