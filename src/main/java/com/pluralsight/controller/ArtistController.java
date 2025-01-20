@@ -1,11 +1,10 @@
 package com.pluralsight.controller;
 
-import com.pluralsight.dao.ArtistDAO;
 import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.ArtistType;
 import com.pluralsight.enums.Genre;
-import com.pluralsight.service.ArtistDataService;
+import com.pluralsight.service.ArtistTrackService;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,17 +14,22 @@ import java.util.function.Supplier;
 // @RequestMapping("/api/v1/artist")
 public class ArtistController {
 
-    private final ArtistDataService artistDataService = new ArtistDataService(new ArtistDAO());
+    private final ArtistTrackService artistTrackService;
+
+    public ArtistController(ArtistTrackService artistTrackService) {
+        this.artistTrackService = artistTrackService;
+    }
 
     //     @PostMapping(path = "/new")
     public String postRequestCreateArtist(/*@RequestBody*/ Artist artist) {
         if (artist == null) return "Http 404 Not Found";
         if (artist.getId() > 0) return "Http 400 Bad Request";
         try {
-            artistDataService.saveArtist(artist);
+            artistTrackService.saveArtist(artist);
             System.out.println("Artist created successfully");
             return "Http 200 OK";
         } catch (Exception e) {
+            System.out.println(e.getStackTrace().toString());
             return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
@@ -36,7 +40,7 @@ public class ArtistController {
         if (artistId <= 0 || artist.getId() <= 0) return "Http 400 Bad Request";
         if (artistId != artist.getId()) return "Http 409 Conflict";
         try {
-            Optional<Artist> optionalArtist = artistDataService.saveArtist(artist);
+            Optional<Artist> optionalArtist = artistTrackService.saveArtist(artist);
             if (optionalArtist.isPresent()) {
                 System.out.println("Artist updated successfully");
                 return "Http 200 OK";
@@ -53,7 +57,7 @@ public class ArtistController {
     public String deleteRequestDeleteArtist(/*@PathVariable*/ int artistId) {
         if (artistId <= 0) return "Http 404 Not Found";
         return processGetArtistByIdRequest(artistId, () -> {
-            artistDataService.deleteArtistById(artistId);
+            artistTrackService.deleteArtistById(artistId);
             return "Http 200 OK";
         });
     }
@@ -61,7 +65,7 @@ public class ArtistController {
     //    @GetMapping(path = "/find/artists/all")
     public String getRequestGetAllArtists() {
         try {
-            List<Artist> allArtists = artistDataService.getAllArtists();
+            List<Artist> allArtists = artistTrackService.getAllArtists();
             if (allArtists.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -83,7 +87,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByGenre(/*@PathVariable*/ Genre genre) {
         if (genre == null) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByGenreList = artistDataService.getByArtistGenre(genre);
+            List<Artist> artistsByGenreList = artistTrackService.getByArtistGenre(genre);
             if (artistsByGenreList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -91,6 +95,7 @@ public class ArtistController {
             artistsByGenreList.forEach(System.out::println);
             return "Http 200 OK";
         } catch (Exception e) {
+            System.out.println();
             return "Http 500 Internal Server Error. " + e.getMessage();
         }
     }
@@ -99,7 +104,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByName(/*@PathVariable*/ String name) {
         if (name == null || name.isBlank()) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByNameList = artistDataService.getByName(name);
+            List<Artist> artistsByNameList = artistTrackService.getByName(name);
             if (artistsByNameList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -115,7 +120,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByNationality(/*@PathVariable*/ String nationality) {
         if (nationality == null || nationality.isBlank()) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByNationalityList = artistDataService.getByArtistNationality(nationality);
+            List<Artist> artistsByNationalityList = artistTrackService.getByArtistNationality(nationality);
             if (artistsByNationalityList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -131,7 +136,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByYearFounded(/*@PathVariable*/ int yearFounded) {
         if (yearFounded < 0) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByYearFoundedList = artistDataService.getByArtistYearFounded(yearFounded);
+            List<Artist> artistsByYearFoundedList = artistTrackService.getByArtistYearFounded(yearFounded);
             if (artistsByYearFoundedList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -147,7 +152,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByArtistTrack(/*@PathVariable*/ Track track) {
         if (track == null) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByTrackList = artistDataService.getByArtistTrack(track);
+            List<Artist> artistsByTrackList = artistTrackService.getByArtistTrackId(track.getId());
             if (artistsByTrackList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -163,7 +168,7 @@ public class ArtistController {
     public String getRequestGetAllArtistsByArtistType(/*@PathVariable*/ ArtistType artistType) {
         if (artistType == null) return "Http 404 Not Found";
         try {
-            List<Artist> artistsByArtistTypeList = artistDataService.getByArtistType(artistType);
+            List<Artist> artistsByArtistTypeList = artistTrackService.getByArtistType(artistType);
             if (artistsByArtistTypeList.isEmpty()) {
                 System.out.println("No artists found");
                 return "Http 404 Not Found";
@@ -177,7 +182,7 @@ public class ArtistController {
 
     protected String processGetArtistByIdRequest(int artistId, Supplier<String> onSuccessAction) {
         try {
-            Optional<Artist> optionalArtist = artistDataService.getArtistById(artistId);
+            Optional<Artist> optionalArtist = artistTrackService.getArtistById(artistId);
             if (optionalArtist.isPresent()) {
                 return onSuccessAction.get();
             } else {
