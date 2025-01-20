@@ -290,20 +290,7 @@ class ArtistControllerTest {
 
         assertEquals("Http 200 OK", response);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     @Test
     void processGetArtistByIdRequest_shouldReturnNotFoundWhenArtistIdNotInDatabase() {
         Artist artist = generateNewArtistsForTests().getFirst();
