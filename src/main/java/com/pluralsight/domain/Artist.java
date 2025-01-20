@@ -96,7 +96,7 @@ public class Artist {
 //                ", artistTypes=" + artistTypes +
 //                ", genres=" + genres +
                 ", biography='" + biography + '\'' +
-                ", nationality='" + nacionality + '\'' +
+                ", nationality='" + nationality + '\'' +
                 ", yearFounded='" + yearFounded + '\'' +
                 ", tracks=" + TrackHelper.getTrackTitleFromList(tracks) +
                 '}';

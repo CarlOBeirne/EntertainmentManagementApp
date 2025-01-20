@@ -1,5 +1,6 @@
 package com.pluralsight.controller;
 
+import com.pluralsight.dao.ArtistDAO;
 import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.ArtistType;
@@ -14,7 +15,7 @@ import java.util.function.Supplier;
 // @RequestMapping("/api/v1/artist")
 public class ArtistController {
 
-    private final ArtistDataService artistDataService = new ArtistDataService();
+    private final ArtistDataService artistDataService = new ArtistDataService(new ArtistDAO());
 
     //     @PostMapping(path = "/new")
     public String postRequestCreateArtist(/*@RequestBody*/ Artist artist) {
@@ -35,9 +36,14 @@ public class ArtistController {
         if (artistId <= 0 || artist.getId() <= 0) return "Http 400 Bad Request";
         if (artistId != artist.getId()) return "Http 409 Conflict";
         try {
-            artistDataService.saveArtist(artist);
-            System.out.println("Artist updated successfully");
-            return "Http 200 OK";
+            Optional<Artist> optionalArtist = artistDataService.saveArtist(artist);
+            if (optionalArtist.isPresent()) {
+                System.out.println("Artist updated successfully");
+                return "Http 200 OK";
+
+            } else {
+                return "Http 404 Not Found";
+            }
         }  catch (Exception e) {
             return "Http 500 Internal Server Error. " + e.getMessage();
         }
@@ -154,7 +160,7 @@ public class ArtistController {
     }
 
     //    @GetMapping(path = "/find/all/type/{artistType}
-    public String getRequestGetAllArtistsByArtistTrack(/*@PathVariable*/ ArtistType artistType) {
+    public String getRequestGetAllArtistsByArtistType(/*@PathVariable*/ ArtistType artistType) {
         if (artistType == null) return "Http 404 Not Found";
         try {
             List<Artist> artistsByArtistTypeList = artistDataService.getByArtistType(artistType);
@@ -169,7 +175,7 @@ public class ArtistController {
         }
     }
 
-    private String processGetArtistByIdRequest(int artistId, Supplier<String> onSuccessAction) {
+    protected String processGetArtistByIdRequest(int artistId, Supplier<String> onSuccessAction) {
         try {
             Optional<Artist> optionalArtist = artistDataService.getArtistById(artistId);
             if (optionalArtist.isPresent()) {
