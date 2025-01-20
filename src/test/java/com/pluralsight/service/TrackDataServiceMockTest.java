@@ -1,12 +1,10 @@
 package com.pluralsight.service;
 
 import com.pluralsight.dao.DaoInterface;
-import com.pluralsight.dao.TrackDAO;
 import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.ArtistType;
 import com.pluralsight.enums.Genre;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -15,15 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.management.openmbean.ArrayType;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class TrackDataServiceTest {
+public class TrackDataServiceMockTest {
 
     @Mock
     private DaoInterface<Track> daoInterface;
@@ -52,10 +48,10 @@ public class TrackDataServiceTest {
     @Test
     public void getById_shouldCallGetByIdMethod() {
         List<Track> allTracks = allTracks();
-        int id = anyInt();
+        int id = 1;
         when(daoInterface.getById(id)).thenReturn(Optional.ofNullable(allTracks.get(id)));
-        daoInterface.getById(id);
-        verify(daoInterface).getById(anyInt());
+        trackDataService.getByTrackId(id);
+        verify(daoInterface).getById(id);
     }
 
     @Test

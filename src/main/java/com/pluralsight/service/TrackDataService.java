@@ -1,19 +1,20 @@
 package com.pluralsight.service;
 
-import com.pluralsight.dao.TrackDAO;
+import com.pluralsight.dao.DaoInterface;
 import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.Genre;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TrackDataService {
-    private final TrackDAO trackDAO = new TrackDAO();
+    private final DaoInterface<Track> trackDAO;
 
-    public Track saveTrack(Track track) {
+    public TrackDataService(DaoInterface<Track> trackDAO) { this.trackDAO = trackDAO;}
+
+    public Optional<Track> saveTrack(Track track) {
         if (track == null) throw new IllegalArgumentException("Track is null.");
         return trackDAO.save(track);
     }
