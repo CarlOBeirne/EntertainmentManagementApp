@@ -9,20 +9,19 @@ import java.util.List;
 public class Artist {
     private int id;
     private String name;
-    private List<ArtistType> artistTypes;
+    private ArtistType artistType;
     private List<Genre> genres;
     private String biography;
-    private String nacionality;
+    private String nationality;
     private String yearFounded;
     private List<Track> tracks;
 
-    public Artist(String yearFounded, String nacionality, String biography, List<ArtistType> artistTypes, String name, int id) {
+    public Artist(String yearFounded, String nationality, String biography, ArtistType artistType, String name) {
         this.yearFounded = yearFounded;
-        this.nacionality = nacionality;
+        this.nationality = nationality;
         this.biography = biography;
-        this.artistTypes = artistTypes;
+        this.artistType = artistType;
         this.name = name;
-        this.id = id;
     }
 
     public int getId() {
@@ -41,12 +40,12 @@ public class Artist {
         this.name = name;
     }
 
-    public List<ArtistType> getArtistTypes() {
-        return artistTypes;
+    public ArtistType getArtistType() {
+        return artistType;
     }
 
-    public void setArtistTypes(List<ArtistType> artistTypes) {
-        this.artistTypes = artistTypes;
+    public void setArtistType(ArtistType artistType) {
+        this.artistType = artistType;
     }
 
     public List<Genre> getGenres() {
@@ -65,12 +64,12 @@ public class Artist {
         this.biography = biography;
     }
 
-    public String getNacionality() {
-        return nacionality;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setNacionality(String nacionality) {
-        this.nacionality = nacionality;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public String getYearFounded() {
