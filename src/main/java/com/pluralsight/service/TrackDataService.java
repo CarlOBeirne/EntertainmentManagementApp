@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class TrackDataService {
     private final DaoInterface<Track> trackDAO;
 
-    public TrackDataService(DaoInterface<Track> trackDAO) { this.trackDAO = trackDAO;};
+    public TrackDataService(DaoInterface<Track> trackDAO) { this.trackDAO = trackDAO;}
 
     public Optional<Track> saveTrack(Track track) {
         if (track == null) throw new IllegalArgumentException("Track is null.");
