@@ -4,6 +4,7 @@ import com.pluralsight.enums.ArtistType;
 import com.pluralsight.enums.Genre;
 import com.pluralsight.utils.TrackHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Artist {
@@ -19,9 +20,11 @@ public class Artist {
     public Artist(int yearFounded, String nationality, String biography, ArtistType artistType, String name) {
         this.yearFounded = yearFounded;
         this.nationality = nationality;
+        this.genres = new ArrayList<>();
         this.biography = biography;
         this.artistType = artistType;
         this.name = name;
+        this.tracks = new ArrayList<>();
     }
 
     public int getId() {
@@ -86,6 +89,14 @@ public class Artist {
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public void addTrack(Track track) {
+        this.tracks.add(track);
+    }
+
+    public void removeTrack(Track track) {
+        tracks.remove(track);
     }
 
     @Override

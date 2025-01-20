@@ -1,9 +1,12 @@
 package com.pluralsight.controller;
 
+import com.pluralsight.dao.ArtistDAO;
 import com.pluralsight.domain.Artist;
 import com.pluralsight.domain.Track;
 import com.pluralsight.enums.ArtistType;
 import com.pluralsight.enums.Genre;
+import com.pluralsight.service.ArtistTrackService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,7 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArtistControllerTest {
 
-    private final ArtistController artistController = new ArtistController();
+    private ArtistController artistController;
+
+    @BeforeEach
+    void setUp() {
+        new ArtistDAO().deleteAll();
+        artistController = new ArtistController(new ArtistTrackService());
+    }
 
     @Test
     void postRequestCreateArtist_shouldReturnNotFoundWhenNull() {
@@ -163,10 +172,11 @@ class ArtistControllerTest {
     void getRequestGetAllArtistsByArtistTrack_shouldReturnNotFoundIfListOfAllArtistsByArtistTrackIsEmpty() {
         Artist artist = generateNewArtistsForTests().getFirst();
         Track track1 = new Track("Track Test", 200, Genre.POP, List.of(artist), 2025, 109);
+        track1.setId(1);
         artist.setTracks(List.of(track1));
         artistController.postRequestCreateArtist(artist);
-        Track track2 = new Track("Track Test", 200, Genre.POP, List.of(artist), 2025, 109);
-
+        Track track2 = new Track("Track Test 2", 200, Genre.ROCK, List.of(artist), 2025, 109);
+        track2.setId(2);
         String response = artistController.getRequestGetAllArtistsByArtistTrack(track2);
 
         assertEquals("Http 404 Not Found", response);
@@ -290,7 +300,7 @@ class ArtistControllerTest {
 
         assertEquals("Http 200 OK", response);
     }
-    
+
     @Test
     void processGetArtistByIdRequest_shouldReturnNotFoundWhenArtistIdNotInDatabase() {
         Artist artist = generateNewArtistsForTests().getFirst();

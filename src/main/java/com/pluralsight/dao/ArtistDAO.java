@@ -8,8 +8,12 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ArtistDAO implements DaoInterface<Artist> {
-    private final HashMap<Integer, Artist> artists = new HashMap<>();
+    private static final HashMap<Integer, Artist> artists = new HashMap<>();
     private static final AtomicInteger nextId = new AtomicInteger(1);
+
+    public void deleteAll() {
+        artists.clear();
+    }
 
     @Override
     public Optional<Artist> save(Artist artist) {

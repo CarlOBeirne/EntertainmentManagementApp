@@ -69,9 +69,10 @@ public class ArtistDataService {
                 .collect(Collectors.toList());
     }
 
-    public List<Artist> getByArtistTrack(Track track) {
+    public List<Artist> getByArtistTrackId(int trackId) {
         return artistDAO.getAll().stream()
-                .filter(artist -> artist.getTracks().contains(track))
+                .filter(artist -> artist.getTracks().stream()
+                    .anyMatch(track -> track.getId() == trackId))
                 .collect(Collectors.toList());
     }
 

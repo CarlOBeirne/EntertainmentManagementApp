@@ -1,15 +1,12 @@
 package com.pluralsight.dao;
 
 import com.pluralsight.domain.Track;
-import com.pluralsight.enums.Genre;
 
 import java.util.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TrackDAO implements DaoInterface<Track> {
-    private final Map<Integer, Track> tracks = new HashMap<>();
+    private static final Map<Integer, Track> tracks = new HashMap<>();
     private static final AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
