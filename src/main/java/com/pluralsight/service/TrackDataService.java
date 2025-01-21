@@ -32,20 +32,24 @@ public class TrackDataService {
     }
 
     public List<Track> getByTrackName(String title) {
+        if (title == null) throw new IllegalArgumentException();
         return getAllTracks().stream()
                 .filter(e -> e.getTitle().toLowerCase().contains(title.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     public List<Track> getByTrackGenre(Genre genre) {
+        if (genre == null) throw new IllegalArgumentException();
         return getAllTracks().stream().filter(e -> e.getGenre().name().equalsIgnoreCase(genre.name())).toList();
     }
 
     public List<Track> getByTrackYearReleased(int yearReleased) {
+        if (yearReleased < 0) throw new IllegalArgumentException();
         return getAllTracks().stream().filter(e -> e.getYearReleased() == yearReleased).toList();
     }
 
     public List<Track> getByTrackArtist(Artist artist) {
+        if (artist == null) throw new IllegalArgumentException();
         return getAllTracks().stream().filter(e -> e.getArtists().contains(artist)).toList();
     }
 }
