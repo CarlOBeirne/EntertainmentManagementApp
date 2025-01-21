@@ -27,12 +27,7 @@ public class ArtistTrackService {
         if (track == null) throw new IllegalArgumentException("Track is null.");
         if (track.getId() == 0) {
             trackDataService.saveTrack(track).orElseThrow();
-
             linkTrackToArtists(track, track.getArtists().stream()
-                    .map(Artist::getId)
-                    .toList());
-
-            unlinkTrackFromArtists(track, track.getArtists().stream()
                     .map(Artist::getId)
                     .toList());
 
@@ -54,7 +49,14 @@ public class ArtistTrackService {
     }
 
     public void deleteTrack(int trackId) {
-        trackDataService.deleteTrack(trackId);
+        Optional<Track> optionalTrack = trackDataService.getByTrackId(trackId);
+        if (optionalTrack.isPresent()) {
+            Track track = optionalTrack.get();
+            unlinkTrackFromArtists(track, track.getArtists().stream()
+                    .map(Artist::getId)
+                    .toList());
+            trackDataService.deleteTrack(trackId);
+        }
     }
 
     public List<Track> getByTrackName(String title) {
@@ -150,7 +152,7 @@ public class ArtistTrackService {
         // Fetch all existing artists associate to a track
         List<Artist> artistsByTrack = artistDataService.getByArtistTrackId(track.getId());
         List<Artist> artistsToRemoveTrackFrom = artistsByTrack.stream()
-                .filter(artist -> !artistIdList.contains(artist.getId()))
+                .filter(artist -> artistIdList.contains(artist.getId()))
                 .toList();
         artistsToRemoveTrackFrom.forEach(artist -> artist.removeTrack(track));
     }
