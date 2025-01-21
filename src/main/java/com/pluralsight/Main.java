@@ -34,8 +34,8 @@ public class Main {
         Track vivaLaVida = new Track("Viva la Vida", 225, Genre.ROCK, List.of(coldplay), 2008,138);
         Track myUniverse = new Track("My Universe", 229, Genre.ROCK, List.of(coldplay, bts), 2008,138);
 
-        trackController.createTrack(vivaLaVida);
-        trackController.createTrack(myUniverse);
+        trackController.saveTrack(vivaLaVida);
+        trackController.saveTrack(myUniverse);
 
         artistController.getRequestGetAllArtists();
         trackController.getAllTracks();
@@ -45,7 +45,7 @@ public class Main {
 
         artistController.getRequestGetAllArtists();
 
-        trackController.deleteTrackById(myUniverse.getId());
+        trackController.deleteTrack(myUniverse.getId());
 
         artistController.getRequestGetAllArtistsByNationality("gb");
 
