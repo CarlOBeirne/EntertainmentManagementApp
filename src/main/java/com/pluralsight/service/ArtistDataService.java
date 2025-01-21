@@ -21,9 +21,7 @@ public class ArtistDataService {
 
     //Save or Update artist if not null and if id isn't 0.
     public Optional<Artist> saveArtist(Artist artist) {
-        if (artist == null) {
-            System.err.println("NullPointerException on SaveArtist.");
-        }
+        if (artist == null) throw new NullPointerException("Artist is null.");
         return artistDAO.save(artist);
     }
 
